@@ -116,12 +116,12 @@ module.exports = [
         target: 'node',
         externals: [
             nodeExternals({
-                whitelist: ['webpack/hot/poll?300', /\.(css|scss|sass|sss|less)$/],
+                whitelist: [
+                    'webpack/hot/poll?300',
+                    // /\.(css|scss|sass|sss|less)$/
+                ],
             }),
         ],
-        resolve: {
-            extensions: ['.js', '.less'],
-        },
 
         // resolve: {
         //     alias: {
@@ -146,7 +146,7 @@ module.exports = [
             // new webpack.HotModuleReplacementPlugin({ quiet: true }),
             // new webpack.IgnorePlugin({resourceRegExp, contextRegExp});
             // resourceRegExp: /^\.\/locale$/,
-            new webpack.IgnorePlugin({ resourceRegExp: /\.less$/ }),
+            // new webpack.IgnorePlugin({ resourceRegExp: /\.less$/ }),
             new webpack.HotModuleReplacementPlugin(),
             new StartServerPlugin({
                 name: 'server.js',
@@ -158,7 +158,13 @@ module.exports = [
         ],
         stats: 'errors-only',
         module: {
-            // loaders: [{ test: /\.less$/, loader: 'ignore-loader' }],
+            rules: [
+                {
+                    test: /\.(le|sc|sa|c)ss$/,
+                    use: [{ loader: 'ignore-loader' }],
+                    // use: [{ loader: 'css-loader' }, { loader: 'less-loader' }],
+                },
+            ],
         },
     },
     // {
